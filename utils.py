@@ -38,7 +38,7 @@ def fetch_reply(msg, session_id):
         for row in news:
             news_str += "\n\n{}\n\n{}\n\n".format(row['title'],
             row['link'])
-        return news_str
+        return news_str,'',''
     elif response.intent.display_name=='get_weather':
         owm = pyowm.OWM("2242ac01869a406a63e2cf1f430724ef")
         weather=dict(response.parameters)
@@ -59,7 +59,7 @@ def fetch_reply(msg, session_id):
         weather+="\ntemprature: {} °c\n".format(temprature)
         weather+="\nhumidity : {}\n".format(humidity)
         weather+="\nwind speed: {}\n".format(wind)
-        return weather
+        return weather,'',''
 
     elif response.intent.display_name=='get_lyrics':
         info=dict(response.parameters)
@@ -74,7 +74,7 @@ def fetch_reply(msg, session_id):
             userdata={'artist':artist,'title':title,'time':get_time()}
             insertdata(userdata)
             #print(content_data)
-            return content_data['lyrics'][:1500]
+            return content_data['lyrics'][:1500],'',''
 
     elif response.intent.display_name=="get_meaning":
         dictionary=dict(response.parameters)
@@ -90,7 +90,7 @@ def fetch_reply(msg, session_id):
             data="Meaning of {} is {}\n".format(word_id,content_data["results"][0]["lexicalEntries"][0]["entries"][0]["senses"][0]["definitions"][0])
             userdata = {'word_id':word_id, 'time':get_time()}
             insertdata(userdata)
-            return data
+            return data,'',''
         else:
             return "No meaning found"
 
@@ -98,7 +98,7 @@ def fetch_reply(msg, session_id):
         image_data=dict(response.parameters)
         image=image_data.get('image_type')
         data=wikipedia.summary(image, sentences=2)
-        page_image = wikipedia.page(image).images[1]
+        page_image = wikipedia.page(image).images[0]
         return data,page_image,"image"
     else:
-        return response.fulfillment_text
+        return response.fulfillment_text,'',''
