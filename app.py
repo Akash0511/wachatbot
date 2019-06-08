@@ -19,7 +19,13 @@ def sms_reply():
     
     # Create reply
     resp = MessagingResponse()
-    resp.message(fetch_reply(msg,sender))
+    reply_data,msg,type_image=fetch_reply(msg,sender)
+    if type_image=="image":
+        print(reply_data)
+        resp.message(reply_data).media(msg)
+    else:
+        print(reply_data)
+        resp.message(reply_data)
     #resp.message("You said: {}".format(msg))
     return str(resp)
 

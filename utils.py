@@ -3,6 +3,8 @@ import requests
 import pyowm
 import json
 import datetime
+import wikipedia
+import urllib.request
 from db import insertdata,get_time
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "chatbot.json"
 
@@ -92,5 +94,11 @@ def fetch_reply(msg, session_id):
         else:
             return "No meaning found"
 
+    elif response.intent.display_name=="get_image":
+        image_data=dict(response.parameters)
+        image=image_data.get('image_type')
+        data=wikipedia.summary(image, sentences=2)
+        page_image = wikipedia.page(image).images[1]
+        return data,page_image,"image"
     else:
         return response.fulfillment_text
