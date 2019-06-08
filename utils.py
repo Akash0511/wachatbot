@@ -92,7 +92,7 @@ def fetch_reply(msg, session_id):
             insertdata(userdata)
             return data,'',''
         else:
-            return "No meaning found"
+            return "No meaning found for this word"
 
     elif response.intent.display_name=="get_image":
         image_data=dict(response.parameters)
