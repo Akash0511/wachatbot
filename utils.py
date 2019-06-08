@@ -17,7 +17,6 @@ from gnewsclient import gnewsclient
 client = gnewsclient.NewsClient(max_results=3)
 
 def get_news(parameters):
-    print(parameters)
     client.topic = parameters.get('news_type')
     client.language = parameters.get('language')
     client.location = parameters.get('geo-country','')
@@ -39,6 +38,7 @@ def fetch_reply(msg, session_id):
             news_str += "\n\n{}\n\n{}\n\n".format(row['title'],
             row['link'])
         return news_str,'',''
+
     elif response.intent.display_name=='get_weather':
         owm = pyowm.OWM("2242ac01869a406a63e2cf1f430724ef")
         weather=dict(response.parameters)
@@ -69,7 +69,7 @@ def fetch_reply(msg, session_id):
         request=requests.get(URL)
         content_data=request.json()
         if 'error' in content_data.keys():
-            return "No Lyrics Available"
+            return "No Lyrics Available",'',''
         else:
             userdata={'artist':artist,'title':title,'time':get_time()}
             insertdata(userdata)
@@ -92,7 +92,7 @@ def fetch_reply(msg, session_id):
             insertdata(userdata)
             return data,'',''
         else:
-            return "No meaning found for this word"
+            return "No meaning found for this word",'',''
 
     elif response.intent.display_name=="get_image":
         image_data=dict(response.parameters)
