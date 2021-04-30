@@ -34,7 +34,7 @@ pyowm==2.10.0
 PySocks==1.7.0
 pytz==2019.1
 requests==2.22.0
-rsa==4.0
+rsa==4.7
 six==1.12.0
 soupsieve==1.9.1
 twilio==6.27.1
